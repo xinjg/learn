@@ -5,7 +5,7 @@ import org.xinjg.util.ArrayUtil;
 public class SortUtil {
 
 	/**
-	 * —°‘Ò≈≈–Ú
+	 * Simple Implementation of Selection Sort 
 	 * @param array
 	 */
 	public static void selectionSort( int[] array ){
@@ -28,9 +28,24 @@ public class SortUtil {
 		array[q]=tmp;
 	}
 	
+	/**
+	 * Simple Implementation of Insertion Sort 
+	 * @param a
+	 */
+	public static void insertionSort(int[] a){
+		int len = a.length;
+		for( int i=1;i<len;i++ ){
+			int j=i;
+			while( j>0&& a[j]<=a[--j] ){
+				swap(a,j,j+1);
+			}
+		}
+	}
+	
 	public static void main(String[] args) {
 		int[] a ={-1, 0 ,1, 2, -1 ,-4};
-		selectionSort(a );
+		insertionSort(a );
 		ArrayUtil.printArray(a);
 	}
+	
 }
