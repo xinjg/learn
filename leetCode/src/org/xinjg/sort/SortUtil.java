@@ -1,8 +1,54 @@
 package org.xinjg.sort;
 
+import java.util.Random;
+
 import org.xinjg.util.ArrayUtil;
 
 public class SortUtil {
+	
+	private SortUtil(){}
+	/**
+	 * Quick Sort Finished
+	 * @param a
+	 */
+	public static void quickSort(int[] a){
+		partiotionSort( a,0,a.length-1 );
+	}
+	public static void partiotionSort(int[] a,int lo,int hi){
+		if( lo==hi )
+			return;
+		int j = partition( a,lo,hi );
+		partiotionSort(a,lo,j);
+		partiotionSort(a,j+1,hi);
+	}
+	public static int partition( int[] a, int lo ,int hi ){
+		int v = a[lo];
+		int i = lo;
+		int j=hi+1;
+		while(true){
+			while( a[++i]<=v )
+				if(i==hi)break;
+			while( a[--j]>=v )
+				if(j==lo)break;
+			if( i>=j ){
+				break;
+			}
+			swap(a,i,j);
+		}
+		swap( a,lo,j );
+		return j;
+	}
+	
+	public static void shuffle(int[] a){
+		int len = a.length;
+		Random random=new Random();
+		random.setSeed(System.currentTimeMillis());
+		int r=0;
+		for( int i=0;i<len;i++ ){
+			r=random.nextInt(i+1);
+			swap(a,i,r);
+		}
+	}
 	
 	/**
 	 * Top down merge sort 
@@ -88,8 +134,9 @@ public class SortUtil {
 	}
 	
 	public static void main(String[] args) {
-		int[] a ={4, 5 ,6, 1, 2 ,3};
-		mergeSort(a);
+		int[] a ={'K','R','A','T','E','L','E','P','U','I','M','Q','C','X','O','S' };
+		quickSort(a);
+		ArrayUtil.printAsChar(a);
 		ArrayUtil.printArray(a);
 	}
 	
