@@ -1,6 +1,8 @@
 package org.xinjg.leetcode;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 
@@ -90,21 +92,21 @@ public class TwoSum {
 	public int[] twoSum(int[] numbers, int target) {
 		int[] ret = null;
 		int len = numbers.length;
-		SortedTable st = new SortedTable( len );
+		Map<Integer, Integer> st = new HashMap<Integer, Integer>();
 		for( int i=0;i<len;i++ ){
 			st.put(numbers[i], i+1);
 		}
 		for( int j=0;j<len;j++ ){
-			int idx = st.get(target-numbers[j]);
-			if( idx!=-1&& idx>j  ){
-				ret = new int[2];ret[0]=j+1;ret[1]=idx;
+			Integer idx =  st.get(target-numbers[j]);
+			if( idx!=null&& idx>++j  ){
+				ret = new int[2];ret[0]=j;ret[1]=idx;
 			}
 		}
 		return ret;
 	}
 
 	public static void main(String[] args) {
-		int[] a = {2,7,11,5};
-		System.out.println( Arrays.toString( new TwoSum().twoSum(a, 9)  ) );
+		int[] a = {0,4,3,0};
+		System.out.println( Arrays.toString( new TwoSum().twoSum(a, 0)  ) );
 	}
 }
