@@ -1,5 +1,9 @@
 package org.xinjg.search;
 
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.Queue;
+
 import javax.xml.soap.Node;
 
 public class BinarySearchTrees<Key extends Comparable,Value> {
@@ -183,6 +187,28 @@ public class BinarySearchTrees<Key extends Comparable,Value> {
 		}else {
 			return size(node.left)+1 + rank(node.right,key)+ rank( node.left,key );
 		}
+	}
+	
+	/**
+	 * 
+	 *  author : xinjg
+	 *	TODO	: Inorder traversal	
+	 *	@return
+	 */
+	public Iterable<Key> keys() {
+		Queue<Key> queue = new LinkedList<Key>();
+		inorder(root, queue);
+		return queue;
+	}
+	
+	private void inorder(Node node , Queue<Key> queue) {
+		if (node==null) {
+			return;
+		}
+		inorder(node.left, queue);
+		queue.offer(node.key);
+		inorder(node.right, queue);
+		return;
 	}
 	
 	private class Node{
