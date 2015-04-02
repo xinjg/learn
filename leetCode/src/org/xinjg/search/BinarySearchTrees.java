@@ -211,6 +211,27 @@ public class BinarySearchTrees<Key extends Comparable,Value> {
 		return;
 	}
 	
+	public void deleteMin(){
+		deleteMin(root);
+	}
+	
+	/*
+	 * step 1 go left until reaching null left link;
+	 * setp 2 return that node's right link;
+	 * step 3 update links and node counts after recursive calls;
+	 */
+	private Node deleteMin(Node node){
+		if (node==null) {
+			return null;
+		}
+		if (node.left==null) {
+			return node.right;
+		}
+	   node.left = deleteMin(node.left);
+	   node.cnt=1+size(node.left) + size(node.right);
+	   return node;
+	}
+	
 	private class Node{
 		Key key;
 		Value value;
