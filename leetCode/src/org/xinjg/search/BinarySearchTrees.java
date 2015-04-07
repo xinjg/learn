@@ -31,13 +31,7 @@ public class BinarySearchTrees<Key extends Comparable,Value> {
 	}
 	
 	public Key getMax(){
-		Node node = root;
-		Key max=null;
-		while( node!=null ){
-			max=node.key;
-			node = node.right;
-		}
-		return max;
+		return max(root).key;
 	}
 	
 	/**
@@ -114,13 +108,7 @@ public class BinarySearchTrees<Key extends Comparable,Value> {
 	}
 	
 	public Key getMin(){
-		Node node = root;
-		Key min=null;
-		while( node!=null ){
-			min=node.key;
-			node = node.left;
-		}
-		return min;
+		return min(root).key;
 	}
 	
 	private  Node put( Node node,Key key,Value value ){
@@ -243,4 +231,57 @@ public class BinarySearchTrees<Key extends Comparable,Value> {
 		}
 	}
 	
+	private Node delete(Node node,Key key) {
+		if (node==null || key==null) {
+			return node;
+		}
+		int cmp=key.compareTo(node.key);
+		if (cmp>0) {
+			node.right= delete(node.right, key);
+		}else if (cmp<0) {
+			node.left=delete(node.left, key);
+		}else {
+			
+			if (node.right==null&&node.left==null) {//no child
+				return null;
+			}else if (node.left==null) {//with right child only
+				return node.right;
+			}else if (node.right==null) {//with left child only
+				return node.left;
+			}else {//two children
+				Node t =node;
+				node = min(node.right);//t is next to X
+				node.right = deleteMin(node.right);
+				node.left=t.left;
+			}
+		}
+		node.cnt = size(node.right)+size(node.right)+1;
+		return node;
+	}
+	
+	private Node min(Node node){
+		if (node==null) {
+			return null;
+		}
+		Node min = null;
+		if (node.left!=null) {
+			min = min(node.left);
+		}else {
+			min =node;
+		}
+		return min;
+	}
+	
+	private Node max(Node node){
+		if (node==null) {
+			return null;
+		}
+		Node max =null;
+		if (node.right!=null) {
+			max=max(node.right);
+		}else {
+			max=node;
+		}
+		return max;
+	}
 }
