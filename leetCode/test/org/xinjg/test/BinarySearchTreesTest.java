@@ -2,6 +2,8 @@ package org.xinjg.test;
 
 import static org.junit.Assert.*;
 
+import java.util.Iterator;
+import java.util.Queue;
 import java.util.Random;
 
 import junit.framework.Assert;
@@ -84,6 +86,44 @@ public class BinarySearchTreesTest {
 		bst.put(0, "the value is zero");
 		Assert.assertEquals(1, bst.rank(1));
 		Assert.assertEquals(0, bst.rank(0));
+	}
+	
+	@Test
+	public void testDeleteMin() {
+		BinarySearchTrees<Integer, String> shuffledBST = shuffledBST();
+		for (int i = 9; i >=0; ) {
+			shuffledBST.deleteMin();
+			Assert.assertEquals(i--, shuffledBST.size());
+		} 
+	}
+	
+	@Test
+	public void testDelete() {
+		BinarySearchTrees<Integer, String> shuffledBST = shuffledBST();
+		int size = shuffledBST.size();
+		Assert.assertEquals(10, shuffledBST.size());
+		//Random deletion
+		int[] array =new int[10];
+		for (int i = 0; i < array.length; i++) {
+			array[i]=2*i;
+		}
+		SortUtil.shuffle(array);
+		for (int j = 0; j < array.length; j++) {
+			Assert.assertEquals(true, shuffledBST.get(array[j])!=null);
+			shuffledBST.delete(array[j]);
+			Assert.assertEquals(false, shuffledBST.get(array[j])!=null);
+			Assert.assertEquals(--size, shuffledBST.size());
+		}
+	}
+	
+	@Test
+	public void testKeys() {
+		BinarySearchTrees<Integer, String> shuffledBST = this.shuffledBST();
+		Iterable<Integer> iterable = shuffledBST.keys();
+		Iterator<Integer> iterator = iterable.iterator();
+		while (iterator.hasNext()) {
+			System.out.println( iterator.next() );
+		}
 	}
 	
 	private BinarySearchTrees<Integer,String>shuffledBST(){
