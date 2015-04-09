@@ -1,12 +1,9 @@
 package org.xinjg.search;
 
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
 
-import javax.xml.soap.Node;
-
-public class BinarySearchTrees<Key extends Comparable,Value> {
+public class BinarySearchTrees<Key extends Comparable<Key>,Value> {
 	private Node root;
 	
 	public void put(Key key,Value value){
@@ -200,7 +197,7 @@ public class BinarySearchTrees<Key extends Comparable,Value> {
 	}
 	
 	public void deleteMin(){
-		deleteMin(root);
+		root = deleteMin(root);
 	}
 	
 	/*
@@ -231,6 +228,10 @@ public class BinarySearchTrees<Key extends Comparable,Value> {
 		}
 	}
 	
+	public void delete(Key key){
+		root =delete(root, key);
+	}
+	
 	private Node delete(Node node,Key key) {
 		if (node==null || key==null) {
 			return node;
@@ -241,21 +242,20 @@ public class BinarySearchTrees<Key extends Comparable,Value> {
 		}else if (cmp<0) {
 			node.left=delete(node.left, key);
 		}else {
-			
-			if (node.right==null&&node.left==null) {//no child
-				return null;
-			}else if (node.left==null) {//with right child only
+			if (node.left==null) {//with right child only
 				return node.right;
 			}else if (node.right==null) {//with left child only
 				return node.left;
-			}else {//two children
+			}else {
 				Node t =node;
-				node = min(node.right);//t is next to X
-				node.right = deleteMin(node.right);
+				node = min(t.right);//t is next to X
+				node.right = deleteMin(t.right);
 				node.left=t.left;
 			}
-		}
-		node.cnt = size(node.right)+size(node.right)+1;
+			
+		}//refresh node count
+//		System.out.println( "---node info--- "+ node.key +"    " + size(node.right) + "      " + node.left );
+		node.cnt = size(node.right)+size(node.left)+1;
 		return node;
 	}
 	
