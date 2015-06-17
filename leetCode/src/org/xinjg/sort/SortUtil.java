@@ -96,6 +96,15 @@ public class SortUtil {
 		}
 	}
 
+	public static int[] shuffledArray (int length) {
+		int[] a = new int[length];
+		for (int i = 0; i < a.length; i++) {
+			a[i]=i;
+		}
+		shuffle(a);
+		return a;
+	}
+	
 	/**
 	 * Top down merge sort
 	 * 
@@ -183,6 +192,26 @@ public class SortUtil {
 		}
 	}
 
+	/**
+	 *  is the array sorted
+	 * @param <T>
+	 *	@param array
+	 *	@return
+	 */
+	public static <T> boolean isSorted(Comparable<T>[] array){
+		for (int i = 1; i < array.length; i++) {
+			if (less(array[i],array[i-1] )) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public static boolean less(Comparable a,Comparable b){
+		return a.compareTo(b)<0;
+	}
+	
 	public static void main(String[] args) {
 //		int[] a = { 'K', 'R', 'A', 'T', 'E', 'L', 'E', 'P', 'U', 'I', 'M', 'Q',
 //				'C', 'X', 'O', 'S' };
